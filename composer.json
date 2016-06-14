@@ -17,7 +17,7 @@
   "minimun-stability": "dev",
   "autoload": {
     "psr-4" : {
-      "Correios_" : ["src/Correios"]
+      "Correios" : ["src/Correios"]
     }
   }
 }
