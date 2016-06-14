@@ -1,0 +1,27 @@
+{
+  "name": "wendelmoreira/correios",
+  "type": "library",
+  "description": "Pacote para utilização de serviços dos correios.",
+  "keywords": ["correios", "freight", "shipping", "tracking"],
+  "homepage": "https://github.com/wendelmoreira/correios",
+  "license": "MIT",
+  "version": "1.0",
+  "authors": [{
+    "name": "Wendel Moreira",
+    "email": "marketing@wendelmoreira.com.br"
+  }],
+
+  "require": {
+    "php": ">=5.4"
+  },
+
+  "require-dev": {
+    "phpunit/phpunit": "~4.8|~5.0"
+  },
+  "minimun-stability": "dev",
+  "autoload": {
+    "psr-4" : {
+      "Correios_\\" : ["src/Correios"]
+    }
+  }
+}
