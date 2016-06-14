@@ -14,14 +14,10 @@
   "require": {
     "php": ">=5.4"
   },
-
-  "require-dev": {
-    "phpunit/phpunit": "~4.8|~5.0"
-  },
   "minimun-stability": "dev",
   "autoload": {
     "psr-4" : {
-      "Correios_\\" : ["src/Correios"]
+      "Correios_" : ["src/Correios"]
     }
   }
 }
