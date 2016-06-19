@@ -17,7 +17,7 @@
   "minimun-stability": "dev",
   "autoload": {
     "psr-4" : {
-      "WendelMoreira\\Correios\\" : ["src/Correios"]
+      "WendelMoreira\\" : ["src/"]
     }
   }
 }
