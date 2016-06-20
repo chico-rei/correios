@@ -84,24 +84,24 @@ class CorreiosService extends CorreiosConfiguration
 
     public static function setConfig($value)
     {
-        self::$codAdministrativo = $value['codAdministrativo'] ?: null;
-        self::$codigo_servico = $value['codigo_servico'] ?: null;
-        self::$cartao = $value['cartao'] ?: null;
-        self::$usuario = $value['usuario'] ?: null;
-        self::$senha = $value['senha'] ?: null;
+        self::$codAdministrativo = isset($value['codAdministrativo']) ? $value['codAdministrativo'] : null;
+        self::$codigo_servico = isset($value['codigo_servico']) ? $value['codigo_servico'] : null;
+        self::$cartao = isset($value['cartao']) ? $value['cartao'] : null;
+        self::$usuario = isset($value['usuario']) ? $value['usuario'] : null;
+        self::$senha = isset($value['senha']) ? $value['senha'] : null;
 
-        self::$nome = $value['nome'] ?: null;
-        self::$logradouro = $value['logradouro'] ?: null;
-        self::$numero = $value['numero'] ?: null;
-        self::$complemento = $value['complemento'] ?: null;
-        self::$bairro = $value['bairro'] ?: null;
-        self::$referencia = $value['referencia'] ?: null;
-        self::$cidade = $value['cidade'] ?: null;
-        self::$uf = $value['uf'] ?: null;
-        self::$cepOrigem = $value['cep'] ?: null;
-        self::$ddd = $value['ddd'] ?: null;
-        self::$telefone = $value['telefone'] ?: null;
-        self::$email = $value['email'] ?: null;
+        self::$nome = isset($value['nome']) ? $value['nome'] : null;
+        self::$logradouro = isset($value['logradouro']) ? $value['logradouro'] : null;
+        self::$numero = isset($value['numero']) ? $value['numero'] : null;
+        self::$complemento = isset($value['complemento']) ? $value['complemento'] : null;
+        self::$bairro = isset($value['bairro']) ? $value['bairro'] : null;
+        self::$referencia = isset($value['referencia']) ? $value['referencia'] : null;
+        self::$cidade = isset($value['cidade']) ? $value['cidade'] : null;
+        self::$uf = isset($value['uf']) ? $value['uf'] : null;
+        self::$cepOrigem = isset($value['cep']) ? $value['cep'] : null;
+        self::$ddd = isset($value['ddd']) ? $value['ddd'] : null;
+        self::$telefone = isset($value['telefone']) ? $value['telefone'] : null;
+        self::$email = isset($value['email']) ? $value['email'] : null;
         return true;
     }
 
