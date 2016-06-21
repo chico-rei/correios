@@ -12,7 +12,35 @@ class CorreiosService extends CorreiosConfiguration
     private $paramsWs;
 
     private $functionsWeb1 = [
-        'consultaCEP'
+        'atualizaPLP',
+        'bloquearObjeto',
+        'buscaCliente',
+        'buscaContrato',
+        'buscaServicos',
+        'cancelarPedidoScol',
+        'consultaCEP',
+        'consultaSRO',
+        'consultarPedidosInformacao',
+        'fechaPlp',
+        'fechaPlpVariosServicos',
+        'geraDigitoVerificadorEtiquetas',
+        'getStatusCartaoPostagem',
+        'integrarUsuarioScol',
+        'obterAssuntosPI',
+        'obterClienteAtualizacao',
+        'obterEmbalagemLRS',
+        'obterMensagemRetornoPI',
+        'obterMotivosPI',
+        'registrarPedidosInformacao',
+        'solicitaEtiquetas',
+        'solicitaPLP',
+        'solicitaXmlPlp',
+        'solicitarPostagemScol',
+        'validaEtiquetaPLP',
+        'validaPlp',
+        'validarPostagemReversa',
+        'validarPostagemSimultanea',
+        'verificaDisponibilidadeServico',
     ];
 
     private $functionsWeb2 = [
@@ -27,7 +55,9 @@ class CorreiosService extends CorreiosConfiguration
     ];
 
     private $functionsWeb3 = [
-        'solicitarPostagemReversa'
+        'solicitarPostagemReversa',
+        'cancelarPedido',
+        'acompanharPedido'
     ];
 
     public function  __call($function, $arguments)
@@ -58,6 +88,9 @@ class CorreiosService extends CorreiosConfiguration
             $this->commonParameters = [
                 'codAdministrativo' => self::$codAdministrativo,
                 'codigo_servico' => self::$codigo_servico,
+                'usuario' => self::$usuario,
+                'senha' => self::$senha,
+                'contrato' => self::$contrato,
                 'cartao' => self::$cartao,
                 'destinatario' => [
                     'nome' => self::$nome,
@@ -74,7 +107,7 @@ class CorreiosService extends CorreiosConfiguration
                     'email' => self::$email
                 ]
             ];
-            $this->webService = 'https://apphom.correios.com.br/logisticaReversaWS/logisticaReversaService/logisticaReversaWS?wsdl';
+            $this->webService = 'https://cws.correios.com.br/logisticaReversaWS/logisticaReversaService/logisticaReversaWS?wsdl';
         }
 
         $this->function = $function;
@@ -82,11 +115,17 @@ class CorreiosService extends CorreiosConfiguration
         return $this->getWebservice();
     }
 
+    /**
+     * Seta as configurações para acesso aos webservices
+     * @param $value
+     * @return bool
+     */
     public static function setConfig($value)
     {
         self::$codAdministrativo = isset($value['codAdministrativo']) ? $value['codAdministrativo'] : null;
         self::$codigo_servico = isset($value['codigo_servico']) ? $value['codigo_servico'] : null;
         self::$cartao = isset($value['cartao']) ? $value['cartao'] : null;
+        self::$contrato = isset($value['contrato']) ? $value['contrato'] : null;
         self::$usuario = isset($value['usuario']) ? $value['usuario'] : null;
         self::$senha = isset($value['senha']) ? $value['senha'] : null;
 
@@ -105,6 +144,10 @@ class CorreiosService extends CorreiosConfiguration
         return true;
     }
 
+    /**
+     * Realiza a chamada no webservice
+     * @return Exception
+     */
     public function getWebservice()
     {
         $this->paramsWs = array_merge($this->commonParameters, $this->parameters);

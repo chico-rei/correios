@@ -11,7 +11,7 @@ class ConsultaEnderecoClient extends CorreiosService
         ini_set('default_socket_timeout', 10);
 
         $response = $this->__call('consultaCEP',
-            array('cep' => $cep)
+            ['cep' => $cep]
         );
 
         return new ConsultaCEPResponse($response);
