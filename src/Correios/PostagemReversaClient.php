@@ -40,4 +40,19 @@ class SolicitarPostagemReversaClient extends CorreiosService
 
         return new SolicitarPostagemReversaResponse($response);
     }
+
+    public function cancelarPedido()
+    {
+
+    }
+
+    public function acompanharPedido()
+    {
+
+    }
+
+    public function acompanharPedidoPorData()
+    {
+
+    }
 }
