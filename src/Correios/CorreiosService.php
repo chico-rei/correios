@@ -79,8 +79,7 @@ class CorreiosService extends CorreiosConfiguration
         $this->function = $function;
 
         if (in_array($function, $this->functionsWeb1))
-            $this->webService = (isset($arguments['environment']) && $arguments['environment'] == 'DEV') ?
-                static::WEBSERVICE_CLIENTE_DEV : static::WEBSERVICE_CLIENTE;
+            $this->webService = self::$environment == 'DEV' ? static::WEBSERVICE_CLIENTE_DEV : static::WEBSERVICE_CLIENTE;
         elseif (in_array($function, $this->functionsWeb2))
         {
             $this->commonParameters = [
@@ -91,8 +90,7 @@ class CorreiosService extends CorreiosConfiguration
                 'sCdAvisoRecebimento' => $arguments['sCdAvisoRecebimento'],
                 'sCepOrigem' => self::$cepOrigem,
             ];
-            $this->webService = (isset($arguments['environment']) && $arguments['environment'] == 'DEV') ?
-                static::WEBSERVICE_CALCULADOR_DEV : static::WEBSERVICE_CALCULADOR;
+            $this->webService = self::$environment == 'DEV' ? static::WEBSERVICE_CALCULADOR_DEV : static::WEBSERVICE_CALCULADOR;
         }elseif (in_array($function, $this->functionsWeb3)) {
             $this->commonParameters = [
                 'codAdministrativo' => self::$codAdministrativo,
@@ -113,8 +111,7 @@ class CorreiosService extends CorreiosConfiguration
                     'email' => self::$email
                 ]
             ];
-            $this->webService = (isset($arguments['environment']) && $arguments['environment'] == 'DEV') ?
-                static::WEBSERVICE_REVERSA_DEV : static::WEBSERVICE_REVERSA;
+            $this->webService = self::$environment == 'DEV' ? static::WEBSERVICE_REVERSA_DEV : static::WEBSERVICE_REVERSA;
         }
 
         $this->function = $function;
@@ -148,6 +145,7 @@ class CorreiosService extends CorreiosConfiguration
         self::$ddd = isset($value['ddd']) ? $value['ddd'] : null;
         self::$telefone = isset($value['telefone']) ? $value['telefone'] : null;
         self::$email = isset($value['email']) ? $value['email'] : null;
+        self::$environment = isset($value['environment']) ? $value['environment'] : 'DEV';
         return true;
     }
 
@@ -173,6 +171,14 @@ class CorreiosService extends CorreiosConfiguration
                     'login' => self::$usuario,
                     'password' => self::$senha,
                 ], $data);
+
+
+            if(self::$environment == 'DEV')
+                $data = array_merge($data, [
+                    'verifypeer'            => false,
+                    'verifyhost'            => false,
+                    'soap_version'          => SOAP_1_1
+                ]);
 
             $clientWS = new SoapClient($this->webService,$data);
             $function = $this->function;

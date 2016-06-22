@@ -13,35 +13,47 @@ class PostagemReversaClient extends CorreiosService
      */
     public function solicitarPostagemReversa($data)
     {
-        $response = $this->__call('solicitarPostagemReversa',
-            [
-                'tipo' => $data['tipo'],
-                'numero' => $data['numero'],
-                'id_cliente' => $data['id_cliente'],
-                'ag' => $data['ag'],
-                'cartao' => self::$cartao,
-                'valor_declarado' => $data['valor_declarado'],
-                'servico_adicional' => $data['servico_adicional'],
-                'descricao' => $data['descricao'],
-                'ar' => $data['ar'],
-                'cklist' => [
-                    'documento' => $data['documento']
-                ],
-                'remetente' => [
-                    'nome' => $data['nome'],
-                    'logradouro' => $data['logradouro'],
-                    'numero' => $data['numero'],
-                    'complemento' => $data['complemento'],
-                    'bairro' => $data['bairro'],
-                    'cidade' => $data['cidade'],
-                    'uf' => $data['uf'],
-                    'cep' => $data['cep'],
-                    'referencia' => $data['referencia'],
-                    'ddd' => $data['ddd'],
-                    'telefone' => $data['telefone'],
-                    'email' => $data['email']
-                ],
+        $coleta = [
+            'tipo' => $data['tipo'],
+            'numero' => $data['numero'],
+            'id_cliente' => $data['id_cliente'],
+            'ag' => $data['ag'],
+            'cartao' => self::$cartao,
+            'valor_declarado' => $data['valor_declarado'],
+            'servico_adicional' => $data['servico_adicional'],
+            'descricao' => $data['descricao'],
+            'ar' => $data['ar'],
+            'cklist' => $data['cklist'],
+            'documento' => $data['documento'],
+            'remetente' => [
+                'nome' => $data['remetente']['nome'],
+                'logradouro' => $data['remetente']['logradouro'],
+                'numero' => $data['remetente']['numero'],
+                'complemento' => $data['remetente']['complemento'],
+                'bairro' => $data['remetente']['bairro'],
+                'cidade' => $data['remetente']['cidade'],
+                'uf' => $data['remetente']['uf'],
+                'cep' => $data['remetente']['cep'],
+                'referencia' => $data['remetente']['referencia'],
+                'ddd' => $data['remetente']['ddd'],
+                'telefone' => $data['remetente']['telefone'],
+                'email' => $data['remetente']['email'],
+                'identificacao' => $data['remetente']['identificacao']
+            ],
+            'obj_col' => [
+                'item' => $data['obj']['item'],
+                'desc' => $data['obj']['desc'],
+                'entrega' => $data['obj']['entrega'],
+                'num' => $data['obj']['num'],
+                'id' => $data['obj']['id']
             ]
+        ];
+
+        if(isset($data['produto']))
+            $coleta = array_merge($coleta, ['produto' => $data['produto']]);
+
+        $response = $this->__call('solicitarPostagemReversa',
+            ['coletas_solicitadas' => $coleta]
         );
 
         return new SolicitarPostagemReversaResponse($response);

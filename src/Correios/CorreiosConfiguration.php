@@ -21,4 +21,6 @@ abstract class CorreiosConfiguration
     protected static $ddd;
     protected static $telefone;
     protected static $email;
+
+    protected static $environment;
 }
