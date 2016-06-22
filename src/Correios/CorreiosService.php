@@ -132,6 +132,7 @@ class CorreiosService extends CorreiosConfiguration
         self::$contrato = isset($value['contrato']) ? $value['contrato'] : null;
         self::$usuario = isset($value['usuario']) ? $value['usuario'] : null;
         self::$senha = isset($value['senha']) ? $value['senha'] : null;
+        self::$senha_reversa = isset($value['senha_reversa']) ? $value['senha_reversa'] : null;
 
         self::$nome = isset($value['nome']) ? $value['nome'] : null;
         self::$logradouro = isset($value['logradouro']) ? $value['logradouro'] : null;
@@ -169,7 +170,7 @@ class CorreiosService extends CorreiosConfiguration
             if(in_array($this->webService, [static::WEBSERVICE_REVERSA, static::WEBSERVICE_REVERSA_DEV]))
                 $data = array_merge([
                     'login' => self::$usuario,
-                    'password' => self::$senha,
+                    'password' => self::$senha_reversa,
                 ], $data);
 
 

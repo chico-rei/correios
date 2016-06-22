@@ -5,6 +5,7 @@ abstract class CorreiosConfiguration
     protected static $codAdministrativo;
     protected static $usuario;
     protected static $senha;
+    protected static $senha_reversa;
     protected static $contrato;
     protected static $cepOrigem;
     protected static $codigo_servico;
