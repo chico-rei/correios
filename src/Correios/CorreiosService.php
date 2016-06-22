@@ -11,6 +11,14 @@ class CorreiosService extends CorreiosConfiguration
     private $parameters;
     private $paramsWs;
 
+    const WEBSERVICE_CLIENTE = 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl';
+    const WEBSERVICE_CALCULADOR =  'http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx?WSDL';
+    const WEBSERVICE_REVERSA = 'https://cws.correios.com.br/logisticaReversaWS/logisticaReversaService/logisticaReversaWS?wsdl';
+
+    const WEBSERVICE_CLIENTE_DEV = 'https://apphom.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl';
+    const WEBSERVICE_CALCULADOR_DEV =  'http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx?WSDL';
+    const WEBSERVICE_REVERSA_DEV = 'https://apphom.correios.com.br/logisticaReversaWS/logisticaReversaService/logisticaReversaWS?wsdl';
+
     private $functionsWeb1 = [
         'atualizaPLP',
         'bloquearObjeto',
@@ -71,7 +79,8 @@ class CorreiosService extends CorreiosConfiguration
         $this->function = $function;
 
         if (in_array($function, $this->functionsWeb1))
-            $this->webService = 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl';
+            $this->webService = (isset($arguments['environment']) && $arguments['environment'] == 'DEV') ?
+                static::WEBSERVICE_CLIENTE_DEV : static::WEBSERVICE_CLIENTE;
         elseif (in_array($function, $this->functionsWeb2))
         {
             $this->commonParameters = [
@@ -82,15 +91,12 @@ class CorreiosService extends CorreiosConfiguration
                 'sCdAvisoRecebimento' => $arguments['sCdAvisoRecebimento'],
                 'sCepOrigem' => self::$cepOrigem,
             ];
-
-            $this->webService = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx?WSDL';
+            $this->webService = (isset($arguments['environment']) && $arguments['environment'] == 'DEV') ?
+                static::WEBSERVICE_CALCULADOR_DEV : static::WEBSERVICE_CALCULADOR;
         }elseif (in_array($function, $this->functionsWeb3)) {
             $this->commonParameters = [
                 'codAdministrativo' => self::$codAdministrativo,
                 'codigo_servico' => self::$codigo_servico,
-                'usuario' => self::$usuario,
-                'senha' => self::$senha,
-                'contrato' => self::$contrato,
                 'cartao' => self::$cartao,
                 'destinatario' => [
                     'nome' => self::$nome,
@@ -107,7 +113,8 @@ class CorreiosService extends CorreiosConfiguration
                     'email' => self::$email
                 ]
             ];
-            $this->webService = 'https://cws.correios.com.br/logisticaReversaWS/logisticaReversaService/logisticaReversaWS?wsdl';
+            $this->webService = (isset($arguments['environment']) && $arguments['environment'] == 'DEV') ?
+                static::WEBSERVICE_REVERSA_DEV : static::WEBSERVICE_REVERSA;
         }
 
         $this->function = $function;
@@ -154,12 +161,20 @@ class CorreiosService extends CorreiosConfiguration
 
         try
         {
-            $clientWS = new SoapClient($this->webService, [
+            $data =  [
                 'trace' => true,
                 'exceptions' => true,
                 'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP,
                 'connection_timeout' => 10,
-            ]);
+            ];
+
+            if(in_array($this->webService, [static::WEBSERVICE_REVERSA, static::WEBSERVICE_REVERSA_DEV]))
+                $data = array_merge([
+                    'login' => self::$usuario,
+                    'password' => self::$senha,
+                ], $data);
+
+            $clientWS = new SoapClient($this->webService,$data);
             $function = $this->function;
             $resultWS = $clientWS->$function($this->paramsWs);
 

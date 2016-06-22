@@ -4,7 +4,7 @@ use WendelMoreira\Correios\Responses\AcompanharPedidoResponse;
 use WendelMoreira\Correios\Responses\CancelarPedidoResponse;
 use WendelMoreira\Correios\Responses\SolicitarPostagemReversaResponse;
 
-class SolicitarPostagemReversaClient extends CorreiosService
+class PostagemReversaClient extends CorreiosService
 {
     /**
      * Solicita postagem de logística reversa
