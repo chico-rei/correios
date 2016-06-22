@@ -14,38 +14,38 @@ class PostagemReversaClient extends CorreiosService
     public function solicitarPostagemReversa($data)
     {
         $coleta = [
-            'tipo' => $data['tipo'],
-            'numero' => $data['numero'],
-            'id_cliente' => $data['id_cliente'],
-            'ag' => $data['ag'],
+            'tipo' => isset($data['tipo']) ? $data['tipo'] : null,
+            'numero' => isset($data['numero']) ? $data['numero'] : null,
+            'id_cliente' => isset($data['id_cliente']) ? $data['id_cliente'] : null,
+            'ag' => isset($data['ag']) ? $data['ag'] : null,
             'cartao' => self::$cartao,
-            'valor_declarado' => $data['valor_declarado'],
-            'servico_adicional' => $data['servico_adicional'],
-            'descricao' => $data['descricao'],
-            'ar' => $data['ar'],
-            'cklist' => $data['cklist'],
-            'documento' => $data['documento'],
+            'valor_declarado' => isset($data['valor_declarado']) ? $data['valor_declarado'] : null,
+            'servico_adicional' => isset($data['servico_adicional']) ? $data['servico_adicional'] : null,
+            'descricao' => isset($data['descricao']) ? $data['descricao'] : null,
+            'ar' => isset($data['ar']) ? $data['ar'] : null,
+            'cklist' => isset($data['cklist']) ? $data['cklist'] : null,
+            'documento' => isset($data['documento']) ? $data['documento'] : null,
             'remetente' => [
-                'nome' => $data['remetente']['nome'],
-                'logradouro' => $data['remetente']['logradouro'],
-                'numero' => $data['remetente']['numero'],
-                'complemento' => $data['remetente']['complemento'],
-                'bairro' => $data['remetente']['bairro'],
-                'cidade' => $data['remetente']['cidade'],
-                'uf' => $data['remetente']['uf'],
-                'cep' => $data['remetente']['cep'],
-                'referencia' => $data['remetente']['referencia'],
-                'ddd' => $data['remetente']['ddd'],
-                'telefone' => $data['remetente']['telefone'],
-                'email' => $data['remetente']['email'],
-                'identificacao' => $data['remetente']['identificacao']
+                'nome' => isset($data['remetente']['nome']) ? $data['remetente']['nome'] : null,
+                'logradouro' => isset($data['remetente']['logradouro']) ? $data['remetente']['logradouro'] : null,
+                'numero' => isset($data['remetente']['numero']) ? $data['remetente']['numero'] : null,
+                'complemento' => isset($data['remetente']['complemento']) ? $data['remetente']['complemento'] : null,
+                'bairro' => isset($data['remetente']['bairro']) ? $data['remetente']['bairro'] : null,
+                'cidade' => isset($data['remetente']['cidade']) ? $data['remetente']['cidade'] : null,
+                'uf' => isset($data['remetente']['uf']) ? $data['remetente']['uf'] : null,
+                'cep' => isset($data['remetente']['cep']) ? $data['remetente']['cep'] : null,
+                'referencia' => isset($data['remetente']['referencia']) ? $data['remetente']['referencia'] : null,
+                'ddd' => isset($data['remetente']['ddd']) ? $data['remetente']['ddd'] : null,
+                'telefone' => isset($data['remetente']['telefone']) ? $data['remetente']['telefone'] : null,
+                'email' => isset($data['remetente']['email']) ? $data['remetente']['email'] : null,
+                'identificacao' => isset($data['remetente']['identificacao']) ? $data['remetente']['identificacao'] : null
             ],
             'obj_col' => [
-                'item' => $data['obj']['item'],
-                'desc' => $data['obj']['desc'],
-                'entrega' => $data['obj']['entrega'],
-                'num' => $data['obj']['num'],
-                'id' => $data['obj']['id']
+                'item' => isset($data['obj']['item']) ? $data['obj']['item'] : null,
+                'desc' => isset($data['obj']['desc']) ? $data['obj']['desc'] : null,
+                'entrega' => isset($data['obj']['entrega']) ? $data['obj']['entrega'] : null,
+                'num' => isset($data['obj']['num']) ? $data['obj']['num'] : null,
+                'id' => isset($data['obj']['id']) ? $data['obj']['id'] : null
             ]
         ];
 
@@ -68,8 +68,8 @@ class PostagemReversaClient extends CorreiosService
     {
         $response = $this->__call('cancelarPedido',
             [
-                'numeroPedido' => $data['numero_pedido'],
-                'tipo' => $data['tipo']
+                'numeroPedido' => isset($data['numero_pedido']) ? $data['numero_pedido'] : null,
+                'tipo' => isset($data['tipo']) ? $data['tipo'] : null
             ]
         );
 
@@ -85,9 +85,9 @@ class PostagemReversaClient extends CorreiosService
     {
         $response = $this->__call('acompanharPedido',
             [
-                'tipoBusca' => $data['tipo_busca'],
-                'tipoSolicitacao' => $data['tipo_solicitacao'],
-                'numeroPedido' => $data['numero_pedido']
+                'tipoBusca' => isset($data['tipo_busca']) ? $data['tipo_busca'] : null,
+                'tipoSolicitacao' => isset($data['tipo_solicitacao']) ? $data['tipo_solicitacao'] : null,
+                'numeroPedido' => isset($data['numero_pedido']) ? $data['numero_pedido'] : null
             ]
         );
 
