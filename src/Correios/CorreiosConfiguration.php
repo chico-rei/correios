@@ -2,6 +2,9 @@
 
 abstract class CorreiosConfiguration
 {
+    /**
+     * Configurações gerais dos webservices dos Correios
+     */
     protected static $codAdministrativo;
     protected static $usuario;
     protected static $usuario_reversa;
