@@ -11,10 +11,12 @@ class CorreiosService extends CorreiosConfiguration
     private $parameters;
     private $paramsWs;
 
+    /** Webservices de produção **/
     const WEBSERVICE_CLIENTE = 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl';
     const WEBSERVICE_CALCULADOR =  'http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx?WSDL';
     const WEBSERVICE_REVERSA = 'https://cws.correios.com.br/logisticaReversaWS/logisticaReversaService/logisticaReversaWS?wsdl';
 
+    /** Webservices de desenvolvimento */
     const WEBSERVICE_CLIENTE_DEV = 'https://apphom.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl';
     const WEBSERVICE_CALCULADOR_DEV =  'http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx?WSDL';
     const WEBSERVICE_REVERSA_DEV = 'https://apphom.correios.com.br/logisticaReversaWS/logisticaReversaService/logisticaReversaWS?wsdl';
