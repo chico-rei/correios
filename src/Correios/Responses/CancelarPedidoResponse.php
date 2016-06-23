@@ -8,7 +8,7 @@
  */
 
 
-class CancelarPedidoResponse
+class CancelarPedidoResponse extends AbstractResponse
 {
 
     public $result;

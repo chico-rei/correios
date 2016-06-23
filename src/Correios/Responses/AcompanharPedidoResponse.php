@@ -8,7 +8,7 @@
  */
 
 
-class AcompanharPedidoResponse
+class AcompanharPedidoResponse extends AbstractResponse
 {
 
     public $result;
