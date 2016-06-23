@@ -8,7 +8,7 @@
  */
 
 
-class SolicitarPostagemReversaResponse
+class SolicitarPostagemReversaResponse extends AbstractResponse
 {
 
     public $result;

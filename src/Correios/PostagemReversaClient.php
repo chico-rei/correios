@@ -53,7 +53,8 @@ class PostagemReversaClient extends CorreiosService
             $coleta = array_merge($coleta, ['produto' => $data['produto']]);
 
         $response = $this->__call('solicitarPostagemReversa',
-            ['coletas_solicitadas' => $coleta]
+            ['coletas_solicitadas' => $coleta,
+                'codigo_servico' => $data['codigo_servico']]
         );
 
         return new SolicitarPostagemReversaResponse($response);
