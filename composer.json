@@ -1,14 +1,14 @@
 {
-  "name": "wendelmoreira/correios",
+  "name": "chico-rei/correios",
   "type": "library",
   "description": "Pacote para utilização de serviços dos correios.",
   "keywords": ["correios", "freight", "shipping", "tracking"],
-  "homepage": "https://github.com/wendelmoreira/correios",
+  "homepage": "https://github.com/chico-rei/correios",
   "license": "MIT",
   "version": "1.0",
   "authors": [{
-    "name": "Wendel Moreira",
-    "email": "marketing@wendelmoreira.com.br"
+    "name": "Chico Rei",
+    "email": "php@chicorei.com.br"
   }],
 
   "require": {
@@ -17,7 +17,7 @@
   "minimun-stability": "dev",
   "autoload": {
     "psr-4" : {
-      "WendelMoreira\\" : ["src/"]
+      "ChicoRei\\Packages\\" : ["src/"]
     }
   }
 }

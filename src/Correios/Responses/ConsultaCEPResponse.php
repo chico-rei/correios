@@ -1,8 +1,8 @@
-<?php namespace WendelMoreira\Correios\Responses;
+<?php namespace ChicoRei\Packages\Correios\Responses;
 
 /**
  * Created by PhpStorm.
- * User: WendelMoreira
+ * User: Wendel
  * Date: 13/06/2016
  * Time: 22:10
  */

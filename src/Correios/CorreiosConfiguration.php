@@ -1,4 +1,4 @@
-<?php namespace WendelMoreira\Correios;
+<?php namespace ChicoRei\Packages\Correios;
 
 abstract class CorreiosConfiguration
 {

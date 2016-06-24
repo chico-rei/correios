@@ -1,8 +1,8 @@
-<?php namespace WendelMoreira\Correios;
+<?php namespace ChicoRei\Packages\Correios;
 
-use WendelMoreira\Correios\Responses\AcompanharPedidoResponse;
-use WendelMoreira\Correios\Responses\CancelarPedidoResponse;
-use WendelMoreira\Correios\Responses\SolicitarPostagemReversaResponse;
+use ChicoRei\Packages\Correios\Responses\AcompanharPedidoResponse;
+use ChicoRei\Packages\Correios\Responses\CancelarPedidoResponse;
+use ChicoRei\Packages\Correios\Responses\SolicitarPostagemReversaResponse;
 
 class PostagemReversaClient extends CorreiosService
 {

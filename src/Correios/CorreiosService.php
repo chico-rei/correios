@@ -1,4 +1,4 @@
-<?php namespace WendelMoreira\Correios;
+<?php namespace ChicoRei\Packages\Correios;
 
 use Exception;
 use SoapClient;

@@ -1,4 +1,4 @@
-<?php namespace WendelMoreira\Correios\Responses;
+<?php namespace ChicoRei\Packages\Correios\Responses;
 
 /**
  * Created by PhpStorm.

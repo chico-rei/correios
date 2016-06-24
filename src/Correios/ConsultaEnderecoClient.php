@@ -1,6 +1,6 @@
-<?php namespace WendelMoreira\Correios;
+<?php namespace ChicoRei\Packages\Correios;
 
-use WendelMoreira\Correios\Responses\ConsultaCEPResponse;
+use ChicoRei\Packages\Correios\Responses\ConsultaCEPResponse;
 
 class ConsultaEnderecoClient extends CorreiosService
 {
