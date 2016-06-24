@@ -17,12 +17,12 @@ class CancelarPedidoResponse extends AbstractResponse
     {
         if(isset($response) && $response != null && count($response) > 0)
         {
-            if(isset($response->cancelarPedido) && isset($response->cancelarPedido->objeto_postal)){
+            if(isset($response->cancelarPedido) && isset($response->cancelarPedido->objeto_postal->objeto_postal)){
                 $result = new ObjetoPostalResponse();
 
-                $result->numero_pedido = $response->cancelarPedido->numero_pedido ?:null ;
-                $result->status_pedido = $response->cancelarPedido->status_pedido ?:null ;
-                $result->datahora_cancelamento = $response->cancelarPedido->datahora_cancelamento ?:null ;
+                $result->numero_pedido = $response->cancelarPedido->objeto_postal->numero_pedido ?:null ;
+                $result->status_pedido = $response->cancelarPedido->objeto_postal->status_pedido ?:null ;
+                $result->datahora_cancelamento = $response->cancelarPedido->objeto_postal->datahora_cancelamento ?:null ;
 
                 $this->result = $result;
             }
