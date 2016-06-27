@@ -88,7 +88,7 @@ class PostagemReversaClient extends CorreiosService
             [
                 'tipoBusca' => isset($data['tipo_busca']) ? $data['tipo_busca'] : null,
                 'tipoSolicitacao' => isset($data['tipo_solicitacao']) ? $data['tipo_solicitacao'] : null,
-                'numeroPedido' => isset($data['numero_pedido']) ? $data['numero_pedido'] : null
+                'numeroPedido' => isset($data['numero_pedido']) ? intval($data['numero_pedido']) : null
             ]
         );
 
