@@ -5,7 +5,7 @@
   "keywords": ["correios", "freight", "shipping", "tracking"],
   "homepage": "https://github.com/chico-rei/correios",
   "license": "MIT",
-  "version": "1.0",
+  "version": "0.1",
   "authors": [{
     "name": "Chico Rei",
     "email": "php@chicorei.com.br"
