@@ -37,14 +37,14 @@ class AcompanharPedidoResponse extends AbstractResponse
                         'observacao' => $status->hora_atualizacao,
                     ];
 
-                $result->postagem = [
+                $result->objeto = [
                     'numero_etiqueta' => $response->acompanharPedido->coleta->objeto->numero_etiqueta,
                     'controle_objeto_cliente' => $response->acompanharPedido->coleta->objeto->controle_objeto_cliente,
                     'ultimo_status' => $response->acompanharPedido->coleta->objeto->ultimo_status,
                     'descricao_status' => $response->acompanharPedido->coleta->objeto->descricao_status,
                     'data_ultima_atualizacao' => $response->acompanharPedido->coleta->objeto->data_ultima_atualizacao,
                     'hora_ultima_atualizacao' => $response->acompanharPedido->coleta->objeto->hora_ultima_atualizacao,
-                    'valor_postagem' => $response->acompanharPedido->coleta->objeto->valor_postagem,
+                    'valor_postagem' => isset($response->acompanharPedido->coleta->objeto->valor_postagem) ? $response->acompanharPedido->coleta->objeto->valor_postagem : null,
                 ];
 
                 $this->result = $result;
