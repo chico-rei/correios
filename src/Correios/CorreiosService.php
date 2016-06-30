@@ -167,13 +167,17 @@ class CorreiosService extends CorreiosConfiguration
                 'trace' => true,
                 'exceptions' => true,
                 'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP,
-                'connection_timeout' => 10,
             ];
 
             if(in_array($this->webService, [static::WEBSERVICE_REVERSA, static::WEBSERVICE_REVERSA_DEV]))
                 $data = array_merge([
                     'login' => self::$usuario_reversa,
                     'password' => self::$senha_reversa,
+                    'connection_timeout' => 100,
+                ], $data);
+            else
+                $data = array_merge([
+                    'connection_timeout' => 10,
                 ], $data);
 
 
