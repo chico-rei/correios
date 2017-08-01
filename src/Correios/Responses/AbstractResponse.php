@@ -19,15 +19,23 @@ abstract class AbstractResponse
     protected $error;
     //</editor-fold>
 
+    protected $response;
 
     /**
      * @param mixed $response Objeto retornado pela chamada do web service.
      */
     public function __construct($response)
     {
+        $this->response = $response;
         $this->parse($response);
     }
 
+    /**
+     * @return mixed
+     */
+    public function getResponse(){
+        return $this->response;
+    }
 
     public abstract function parse($response);
 }
