@@ -29,6 +29,7 @@ class SolicitarPostagemReversaResponse extends AbstractResponse
                 $result->data_solicitacao = isset($response->solicitarPostagemReversa->resultado_solicitacao->data_solicitacao) ? $response->solicitarPostagemReversa->resultado_solicitacao->data_solicitacao : null ;
                 $result->hora_solicitacao = isset($response->solicitarPostagemReversa->resultado_solicitacao->hora_solicitacao) ? $response->solicitarPostagemReversa->resultado_solicitacao->hora_solicitacao : null ;
                 $result->codigo_erro = isset($response->solicitarPostagemReversa->resultado_solicitacao->codigo_erro) ? $response->solicitarPostagemReversa->resultado_solicitacao->codigo_erro : null ;
+                $result->descricao_erro = isset($response->solicitarPostagemReversa->resultado_solicitacao->descricao_erro) ? $response->solicitarPostagemReversa->resultado_solicitacao->descricao_erro : null ;
 
                 $this->result = $result;
             }

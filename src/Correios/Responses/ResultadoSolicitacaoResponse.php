@@ -17,4 +17,5 @@ class ResultadoSolicitacaoResponse
     public $data_solicitacao;
     public $hora_solicitacao;
     public $codigo_erro;
+    public $descricao_erro;
 }
