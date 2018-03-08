@@ -15,7 +15,7 @@ class CancelarPedidoResponse extends AbstractResponse
 
     public function parse($response)
     {
-        if(isset($response) && $response != null && count($response) > 0)
+        if(isset($response) && $response != null && is_array($response) && count($response) > 0)
         {
             if(isset($response->cancelarPedido) && isset($response->cancelarPedido->objeto_postal->numero_pedido)){
                 $result = new ObjetoPostalResponse();
