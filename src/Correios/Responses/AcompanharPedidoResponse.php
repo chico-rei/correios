@@ -15,7 +15,7 @@ class AcompanharPedidoResponse extends AbstractResponse
 
     public function parse($response)
     {
-        if(isset($response) && $response != null && is_array($response) && count($response) > 0)
+        if(isset($response) && $response != null)
         {
             if(isset($response->acompanharPedido) && isset($response->acompanharPedido->coleta->numero_pedido)){
                 $result = new ColetaResponse();
