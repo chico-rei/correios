@@ -3,6 +3,10 @@
 use Exception;
 use SoapClient;
 
+/**
+ * Class CorreiosService
+ * @package ChicoRei\Packages\Correios
+ */
 class CorreiosService extends CorreiosConfiguration
 {
     private $function;
@@ -15,11 +19,13 @@ class CorreiosService extends CorreiosConfiguration
     const WEBSERVICE_CLIENTE = 'https://apps.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl';
     const WEBSERVICE_CALCULADOR =  'http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx?WSDL';
     const WEBSERVICE_REVERSA = 'https://cws.correios.com.br/logisticaReversaWS/logisticaReversaService/logisticaReversaWS?wsdl';
+    const WEBSERVICE_RASTRO = 'http://webservice.correios.com.br/service/rastro/Rastro.wsdl';
 
     /** Webservices de desenvolvimento */
     const WEBSERVICE_CLIENTE_DEV = 'https://apphom.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl';
     const WEBSERVICE_CALCULADOR_DEV =  'http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx?WSDL';
     const WEBSERVICE_REVERSA_DEV = 'https://apphom.correios.com.br/logisticaReversaWS/logisticaReversaService/logisticaReversaWS?wsdl';
+    const WEBSERVICE_RASTRO_DEV = 'http://webservice.correios.com.br/service/rastro/Rastro.wsdl';
 
     private $functionsWeb1 = [
         'atualizaPLP',
@@ -67,33 +73,45 @@ class CorreiosService extends CorreiosConfiguration
     private $functionsWeb3 = [
         'solicitarPostagemReversa',
         'cancelarPedido',
-        'acompanharPedido'
+        'acompanharPedido',
     ];
 
-    public function  __call($function, $arguments)
+    private $functionsWeb4 = [
+        'RastroJson',
+        'buscaEventosLista',
+        'buscaEventos',
+    ];
+
+    private $functionsWeb5 = [
+        'CalcPrecoPrazoInter',
+    ];
+
+    public function  __call($function, $parameters)
     {
+        $this->function = $function;
+        $this->parameters = $parameters;
         $this->commonParameters = [
             'codAdministrativo' => self::$codAdministrativo,
             'usuario' => self::$usuario,
             'senha' => self::$senha,
         ];
-        $this->parameters = $arguments;
-        $this->function = $function;
 
         if (in_array($function, $this->functionsWeb1))
+        {
             $this->webService = self::$environment == 'DEV' ? static::WEBSERVICE_CLIENTE_DEV : static::WEBSERVICE_CLIENTE;
+        }
         elseif (in_array($function, $this->functionsWeb2))
         {
+            $this->webService = self::$environment == 'DEV' ? static::WEBSERVICE_CALCULADOR_DEV : static::WEBSERVICE_CALCULADOR;
             $this->commonParameters = [
                 'nCdEmpresa' => self::$codAdministrativo,
                 'sDsSenha' => self::$senha,
-                'nCdServico' => $arguments['nCdServico'],
-                'sCdMaoPropria' => $arguments['sCdMaoPropria'],
-                'sCdAvisoRecebimento' => $arguments['sCdAvisoRecebimento'],
                 'sCepOrigem' => self::$cepOrigem,
             ];
-            $this->webService = self::$environment == 'DEV' ? static::WEBSERVICE_CALCULADOR_DEV : static::WEBSERVICE_CALCULADOR;
-        }elseif (in_array($function, $this->functionsWeb3)) {
+        }
+        elseif (in_array($function, $this->functionsWeb3))
+        {
+            $this->webService = self::$environment == 'DEV' ? static::WEBSERVICE_REVERSA_DEV : static::WEBSERVICE_REVERSA;
             $this->commonParameters = [
                 'codAdministrativo' => self::$codAdministrativo,
                 'codigo_servico' => self::$codigo_servico,
@@ -113,10 +131,19 @@ class CorreiosService extends CorreiosConfiguration
                     'email' => self::$email
                 ]
             ];
-            $this->webService = self::$environment == 'DEV' ? static::WEBSERVICE_REVERSA_DEV : static::WEBSERVICE_REVERSA;
         }
-
-        $this->function = $function;
+        elseif (in_array($function, $this->functionsWeb4))
+        {
+            $this->webService = self::$environment == 'DEV' ? static::WEBSERVICE_RASTRO_DEV : static::WEBSERVICE_RASTRO;
+            $this->commonParameters = [
+                'usuario' => self::$usuario,
+                'senha' => self::$senha,
+            ];
+        }
+        elseif (in_array($function, $this->functionsWeb5))
+        {
+            return $this->getWebserviceInter();
+        }
 
         return $this->getWebservice();
     }
@@ -150,6 +177,7 @@ class CorreiosService extends CorreiosConfiguration
         self::$telefone = isset($value['telefone']) ? $value['telefone'] : null;
         self::$email = isset($value['email']) ? $value['email'] : null;
         self::$environment = isset($value['environment']) ? $value['environment'] : 'DEV';
+
         return true;
     }
 
@@ -163,13 +191,14 @@ class CorreiosService extends CorreiosConfiguration
 
         try
         {
-            $data =  [
+            $data = [
                 'trace' => true,
                 'exceptions' => true,
                 'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP,
+                'connection_timeout' => 10,
             ];
 
-            if(in_array($this->webService, [static::WEBSERVICE_REVERSA, static::WEBSERVICE_REVERSA_DEV]))
+            if (in_array($this->webService, [static::WEBSERVICE_REVERSA, static::WEBSERVICE_REVERSA_DEV]))
                 $data = array_merge([
                     'login' => self::$usuario_reversa,
                     'password' => self::$senha_reversa,
@@ -180,24 +209,63 @@ class CorreiosService extends CorreiosConfiguration
                     'connection_timeout' => 10,
                 ], $data);
 
-
-            if(self::$environment == 'DEV')
+            if (self::$environment == 'DEV')
+            {
                 $data = array_merge($data, [
                     'verifypeer'            => false,
                     'verifyhost'            => false,
                     'soap_version'          => SOAP_1_1
                 ]);
+            }
 
-            $clientWS = new SoapClient($this->webService,$data);
+            $clientWS = new SoapClient($this->webService, $data);
+
             $function = $this->function;
             $resultWS = $clientWS->$function($this->paramsWs);
 
             return $resultWS;
-
         }
         catch (Exception $e)
         {
             return $e;
+        }
+    }
+
+    /**
+     * Acesso ao webservice de cálculo de frete internacional
+     *
+     * @return int|\SimpleXMLElement
+     */
+    private function getWebserviceInter()
+    {
+        try
+        {
+            $curl = curl_init();
+            $postData = ['ip' => '179.184.161.94'];
+            curl_setopt($curl, CURLOPT_HEADER, 0);
+            curl_setopt($curl, CURLOPT_VERBOSE, 0);
+            curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible;)");
+            curl_setopt($curl, CURLOPT_URL, $this->webService);
+            curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
+            curl_setopt($curl, CURLOPT_CONNECTTIMEOUT_MS, 1500);
+            curl_setopt($curl, CURLOPT_TIMEOUT_MS, 1500);
+
+            $resp = curl_exec($curl);
+            $response_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+            curl_close($curl);
+
+            if ($response_code != 200)
+                return 0;
+            else
+                return simplexml_load_string($resp);
+        }
+        catch (Exception $e)
+        {
+            return 0;
         }
     }
 }

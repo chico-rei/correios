@@ -1,15 +1,12 @@
 <?php namespace ChicoRei\Packages\Correios\Responses;
 
 /**
- * Created by PhpStorm.
- * User: Wendel
- * Date: 13/06/2015
- * Time: 22:10
+ * Class ObjetoPostalResponse
+ * @package ChicoRei\Packages\Correios\Responses
  */
 class ObjetoPostalResponse
 {
     public $numero_pedido;
     public $status_pedido;
     public $datahora_cancelamento;
-
 }

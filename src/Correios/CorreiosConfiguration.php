@@ -1,5 +1,9 @@
 <?php namespace ChicoRei\Packages\Correios;
 
+/**
+ * Class CorreiosConfiguration
+ * @package ChicoRei\Packages\Correios
+ */
 abstract class CorreiosConfiguration
 {
     /**

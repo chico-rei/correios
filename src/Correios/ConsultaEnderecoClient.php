@@ -2,17 +2,21 @@
 
 use ChicoRei\Packages\Correios\Responses\ConsultaCEPResponse;
 
+/**
+ * Class ConsultaEnderecoClient
+ * @package ChicoRei\Packages\Correios
+ */
 class ConsultaEnderecoClient extends CorreiosService
 {
+    /**
+     * @param $cep
+     * @return ConsultaCEPResponse
+     */
     public function consultaCEP($cep)
     {
-        // Seta default_socket_timeout para que a consulta seja feita offline quando houver falha
-        // de comunicação com o sistema dos Correios.
         ini_set('default_socket_timeout', 10);
 
-        $response = $this->__call('consultaCEP',
-            ['cep' => $cep]
-        );
+        $response = $this->__call('consultaCEP', ['cep' => $cep]);
 
         return new ConsultaCEPResponse($response);
     }

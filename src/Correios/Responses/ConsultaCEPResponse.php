@@ -1,20 +1,20 @@
 <?php namespace ChicoRei\Packages\Correios\Responses;
 
 /**
- * Created by PhpStorm.
- * User: Wendel
- * Date: 13/06/2016
- * Time: 22:10
+ * Class ConsultaCEPResponse
+ * @package ChicoRei\Packages\Correios\Responses
  */
 class ConsultaCEPResponse extends AbstractResponse
 {
     public $result;
 
+    /**
+     * @param $response
+     */
     public function parse($response)
     {
-        if(isset($response) && $response != null)
-        {
-            if(isset($response->return)){
+        if (isset($response) && $response != null && count((array)$response) > 0) {
+            if (isset($response->return)) {
                 $result = new EnderecoResponse();
                 $result->cidade = $response->return->cidade ? $response->return->cidade : null;
                 $result->endereco = $response->return->end ? $response->return->end : null;

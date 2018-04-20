@@ -1,10 +1,8 @@
 <?php namespace ChicoRei\Packages\Correios\Responses;
 
 /**
- * Created by PhpStorm.
- * User: Wendel
- * Date: 13/06/2016
- * Time: 22:10
+ * Class AbstractResponse
+ * @package ChicoRei\Packages\Correios\Responses
  */
 abstract class AbstractResponse
 {
@@ -33,7 +31,8 @@ abstract class AbstractResponse
     /**
      * @return mixed
      */
-    public function getResponse(){
+    public function getResponse()
+    {
         return $this->response;
     }
 

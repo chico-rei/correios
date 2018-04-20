@@ -4,10 +4,15 @@ use ChicoRei\Packages\Correios\Responses\AcompanharPedidoResponse;
 use ChicoRei\Packages\Correios\Responses\CancelarPedidoResponse;
 use ChicoRei\Packages\Correios\Responses\SolicitarPostagemReversaResponse;
 
+/**
+ * Class PostagemReversaClient
+ * @package ChicoRei\Packages\Correios
+ */
 class PostagemReversaClient extends CorreiosService
 {
     /**
-     * Solicita postagem de logística reversa
+     * Solicita código de postagem reversa
+     *
      * @param $data
      * @return SolicitarPostagemReversaResponse
      */
@@ -49,51 +54,48 @@ class PostagemReversaClient extends CorreiosService
             ]
         ];
 
-        if(isset($data['produto']))
+        if (isset($data['produto'])) {
             $coleta = array_merge($coleta, ['produto' => $data['produto']]);
+        }
 
-        $response = $this->__call('solicitarPostagemReversa',
-            ['coletas_solicitadas' => $coleta,
-                'codigo_servico' => $data['codigo_servico']]
-        );
+        $response = $this->__call('solicitarPostagemReversa', [
+            'coletas_solicitadas' => $coleta,
+            'codigo_servico' => $data['codigo_servico']
+        ]);
 
         return new SolicitarPostagemReversaResponse($response);
     }
 
     /**
      * Cancela pedido de logística reversa
+     *
      * @param $data
      * @return CancelarPedidoResponse
      */
     public function cancelarPedido($data)
     {
-        $response = $this->__call('cancelarPedido',
-            [
-                'numeroPedido' => isset($data['numero_pedido']) ? $data['numero_pedido'] : null,
-                'tipo' => isset($data['tipo']) ? $data['tipo'] : null
-            ]
-        );
+        $response = $this->__call('cancelarPedido', [
+            'numeroPedido' => isset($data['numero_pedido']) ? $data['numero_pedido'] : null,
+            'tipo' => isset($data['tipo']) ? $data['tipo'] : null
+        ]);
 
         return new CancelarPedidoResponse($response);
     }
 
     /**
      * Acompanha histórico de pedido de logística reversa
+     *
      * @param $data
      * @return AcompanharPedidoResponse
      */
     public function acompanharPedido($data)
     {
-        $response = $this->__call('acompanharPedido',
-            [
-                'tipoBusca' => isset($data['tipo_busca']) ? $data['tipo_busca'] : null,
-                'tipoSolicitacao' => isset($data['tipo_solicitacao']) ? $data['tipo_solicitacao'] : null,
-                'numeroPedido' => isset($data['numero_pedido']) ? intval($data['numero_pedido']) : null
-            ]
-        );
+        $response = $this->__call('acompanharPedido', [
+            'tipoBusca' => isset($data['tipo_busca']) ? $data['tipo_busca'] : null,
+            'tipoSolicitacao' => isset($data['tipo_solicitacao']) ? $data['tipo_solicitacao'] : null,
+            'numeroPedido' => isset($data['numero_pedido']) ? intval($data['numero_pedido']) : null
+        ]);
 
         return new AcompanharPedidoResponse($response);
-
     }
-
 }
