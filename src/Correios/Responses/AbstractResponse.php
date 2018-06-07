@@ -15,9 +15,10 @@ abstract class AbstractResponse
 
     /** @var string Mensagem de erro */
     protected $error;
-    //</editor-fold>
 
+    /** @var mixed Resposta original */
     protected $response;
+    //</editor-fold>
 
     /**
      * @param mixed $response Objeto retornado pela chamada do web service.
@@ -34,6 +35,22 @@ abstract class AbstractResponse
     public function getResponse()
     {
         return $this->response;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResult()
+    {
+        return $this->result;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getError()
+    {
+        return $this->error;
     }
 
     public abstract function parse($response);
